@@ -37,49 +37,49 @@ const modes: IGameMode[] = [
 
 function onSelectModehandler(mode: IGameMode) {
   gameMode.value = mode;
+  console.log('onSelectModehandler');
 }
-const listCart = ref<IGameMode[]>([])
+const listCart = ref<IGameMode[]>([]);
 onMounted(() => {
-  listCart.value = []
-})
+  listCart.value = [];
+});
 </script>
 
 <template>
-  <div class="main flex">
-    <div class="main--content">
-      <h1> POKE MEMORIES </h1>
+  <div class="main">
+    <div
+      v-if="!gameMode?.rank"
+      class="game-menu"
+    >
+      <h1 class="game-title"> POKE MEMORIES </h1>
       <p> Select mode to start game </p>
       <ModeList
         :listModes="modes"
-        @selectedMode="onSelectModehandler"
+        @onSelectGameMode="onSelectModehandler"
+        class="mt-5"
       />
     </div>
 
-    <CardList
-      v-if="gameMode?.rank"
-      :listCard=""
-      class="play-screen"
-    >
-      <ul>
-        <li>
-
-        </li>
-      </ul>
-    </CardList>
+    <template v-if="gameMode?.rank">
+      <CardList :gameMode="gameMode" />
+    </template>
 
   </div>
 </template>
 
 <style scoped lang="postcss">
 .main {
-  background-color: #7e405f;
   color: #ee9d9d;
   height: 100%;
 
-  .main--content {
+  .game-menu {
     margin: auto;
+    padding-top: calc(50% - 500px);
   }
 
-  .play-screen {}
+  .game-title {
+    font-size: 4.5rem;
+    font-weight: 600;
+  }
 }
 </style>
