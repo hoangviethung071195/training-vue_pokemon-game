@@ -5,7 +5,7 @@ import { RATIO_OF_HEIGHT_AND_WIDTH } from '../../core/constants/game';
 const prop = defineProps<{
   card: ICard;
   isNotAllowFlipping: boolean,
-  widthOfEachCard: number
+  widthOfEachCard: number;
 }>();
 
 const emit = defineEmits<{ onFlipCard: [card: ICard]; }>();
@@ -19,16 +19,33 @@ function flipCardHandler() {
 </script>
 
 <template>
-  <div class="flip-card" :style="{
-    width: widthOfEachCard + 'px',
-    height: widthOfEachCard * RATIO_OF_HEIGHT_AND_WIDTH + 'px'
-  }">
-    <div class="flip-card-inner" :class="{ 'flipped-card': card.isFlipped }">
+  <div
+    class="flip-card"
+    :style="{
+      width: widthOfEachCard + 'px',
+      height: widthOfEachCard * RATIO_OF_HEIGHT_AND_WIDTH + 'px'
+    }"
+  >
+    <div
+      class="flip-card-inner"
+      :class="{ 'flipped-card': card.isFlipped }"
+    >
       <div class="flip-card-front">
-        <img :src="card.url" alt="card-front" width="80%" />
+        <img
+          :src="card.url"
+          alt="card-front"
+          width="80%"
+        />
       </div>
-      <div class="flip-card-back" @click="flipCardHandler">
-        <img src="/src/assets/images/icon_back.png" alt="card-back" width="40%" />
+      <div
+        class="flip-card-back"
+        @click="flipCardHandler"
+      >
+        <img
+          src="/src/assets/images/icon_back.png"
+          alt="card-back"
+          width="40%"
+        />
       </div>
     </div>
   </div>

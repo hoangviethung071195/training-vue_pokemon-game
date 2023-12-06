@@ -1,9 +1,8 @@
 export function shuffleArray<T>(array: T[]) {
-  let currentIndex = array.length, randomIndex;
+  let currentIndex = array.length;
 
   while (currentIndex > 0) {
-
-    randomIndex = Math.floor(Math.random() * currentIndex);
+    const randomIndex = Math.floor(Math.random() * currentIndex);
     currentIndex--;
 
     [

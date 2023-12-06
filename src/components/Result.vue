@@ -1,10 +1,10 @@
 <script setup lang="ts">
 
-defineProps<{ completionTime: number }>()
-const emit = defineEmits<{ onResetGame: [] }>()
+defineProps<{ completionTime: number; }>();
+const emit = defineEmits<{ onResetGame: []; }>();
 
 function resetGameHandler() {
-  emit('onResetGame')
+  emit('onResetGame');
 }
 
 </script>
@@ -14,7 +14,10 @@ function resetGameHandler() {
     <h2 class="text-7xl font-bold">✨ Congratulations ✨</h2>
     <h3 class="text-2xl my-3">🍓🍓🍓🍓🍓🍓🍓🍓🍓🍓🍓🍓</h3>
     <h4 class="text-5xl">{{ completionTime }} seconds</h4>
-    <button @click="resetGameHandler" class="my-5">Start Again</button>
+    <button
+      @click="resetGameHandler"
+      class="my-5"
+    >Start Again</button>
     <p class="text-base">Connect with me</p>
     <div class="flex justify-center">
       <a href="#">
