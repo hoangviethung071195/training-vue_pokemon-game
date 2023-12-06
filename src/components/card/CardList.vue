@@ -1,11 +1,11 @@
 <script setup lang="ts">
 import { ICard } from '@core/interfaces/model/Card'
 import { IGameMode } from '@core/interfaces/model/GameMode'
+import { cloneDeep } from 'lodash'
 import { onMounted, ref } from 'vue'
-import { GAME_MODE } from '../../core/constants/game'
+import { CARD_SCREEN_WIDTH_IN_PIXEL, FLIPPING_TIME_IN_MILI_SECOND, GAME_MODE, MAX_ALLOWED_FLIPPED_CARDS, NUMBER_OF_DUPLICATE_CARDS, TOTAL_NUMBER_OF_CARDS } from '../../core/constants/game'
 import { shuffleArray } from '../../core/utils/array'
 import CardItem from './Interact.vue'
-import { NUMBER_OF_DUPLICATE_CARDS, MAX_ALLOWED_FLIPPED_CARDS, FLIPPING_TIME, TOTAL_NUMBER_OF_CARDS, CARD_SCREEN_WIDTH_IN_PIXEL } from '../../core/constants/game'
 
 const { gameMode } = withDefaults(defineProps<{ gameMode?: IGameMode }>(), { gameMode: () => GAME_MODE[0] })
 
@@ -23,13 +23,11 @@ const listCards: ICard[] =
   Array(TOTAL_NUMBER_OF_CARDS)
     .fill(null)
     .map((_, i) => ({
-      url: `/src/assets/images/${i + 1}.png`,
-      index: i
+      url: `/src/assets/images/${i + 1}.png`
     }))
 
 const cardStyle = {
-  gridTemplateColumns: `repeat(${gameMode.numberOfHorizontalItems}, ${widthOfEachCard
-    }px)`,
+  gridTemplateColumns: `repeat(${gameMode.numberOfHorizontalItems}, ${widthOfEachCard}px)`,
   width: `${CARD_SCREEN_WIDTH_IN_PIXEL + gameMode.numberOfHorizontalItems * 20}'px'`,
 }
 
@@ -43,16 +41,10 @@ function loadDisplayedCards() {
   const numberOfUniqCards = totalCards / NUMBER_OF_DUPLICATE_CARDS;
   const uniqCards = listCards.slice(0, numberOfUniqCards)
 
-  displayedCards.value = shuffleArray(
-    [...uniqCards, ...uniqCards]
-      .map((card, index) => ({
-        ...card,
-        index,
-      }))
-  )
+  displayedCards.value = shuffleArray(uniqCards.concat(cloneDeep(uniqCards)))
 }
 
-function processAfterNotAllowFlippingCards() {
+function processAfterCheckingIsCorrectCard() {
   flippedCard.value = []
   isNotAllowFlipping.value = false
 }
@@ -64,13 +56,15 @@ function flipCardHandler(card: ICard) {
     isNotAllowFlipping.value = true
     const isCorrectCard = flippedCard.value.every(c => c.url === card.url)
     if (isCorrectCard) {
-      processAfterNotAllowFlippingCards()
-      checkEndGame()
+      processAfterCheckingIsCorrectCard()
+      setTimeout(() => {
+        checkEndGame()
+      }, FLIPPING_TIME_IN_MILI_SECOND);
     } else {
       setTimeout(() => {
         flippedCard.value.forEach(card => card.isFlipped = false)
-        processAfterNotAllowFlippingCards()
-      }, FLIPPING_TIME)
+        processAfterCheckingIsCorrectCard()
+      }, FLIPPING_TIME_IN_MILI_SECOND)
     }
   } else {
     isNotAllowFlipping.value = false

@@ -1,9 +1,9 @@
 <script setup lang="ts">
-import { onMounted, ref } from 'vue';
+import { ref } from 'vue';
 import { IGameMode } from '../core/interfaces/model/GameMode';
 import ModeGame from './ModeGame.vue';
-import CardList from './card/CardList.vue';
 import Result from './Result.vue';
+import CardList from './card/CardList.vue';
 
 const gameMode = ref<IGameMode>();
 const completionTime = ref(0)
@@ -20,13 +20,10 @@ function resetGameHandler() {
 }
 
 function endGameHandler() {
-  startTime.value = 0;
   const miliSecondToSecond = 1000;
   completionTime.value = Math.round((Date.now() - startTime.value) / miliSecondToSecond);
 }
 
-onMounted(() => {
-});
 </script>
 
 <template>

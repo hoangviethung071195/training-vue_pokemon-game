@@ -1,6 +1,5 @@
 export interface ICard {
-  url: string,
-  index: number;
-  sortOrder?: number;
-  isFlipped?: boolean;
-};
+  url: string
+  sortOrder?: number
+  isFlipped?: boolean
+}

@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { ICard } from '@core/interfaces/model/Card';
-import { RATIO_OF_HEIGHT_AND_WIDTH } from '../../core/constants/game'
+import { RATIO_OF_HEIGHT_AND_WIDTH } from '../../core/constants/game';
 
 const prop = defineProps<{
   card: ICard;
@@ -25,10 +25,10 @@ function flipCardHandler() {
   }">
     <div class="flip-card-inner" :class="{ 'flipped-card': card.isFlipped }">
       <div class="flip-card-front">
-        <img class="image-card-front" :src="card.url" alt="card-front" width="80%">
+        <img :src="card.url" alt="card-front" width="80%" />
       </div>
       <div class="flip-card-back" @click="flipCardHandler">
-        <img class="image-card-back" src="/src/assets/images/icon_back.png" alt="card-back" width="40%">
+        <img src="/src/assets/images/icon_back.png" alt="card-back" width="40%" />
       </div>
     </div>
   </div>

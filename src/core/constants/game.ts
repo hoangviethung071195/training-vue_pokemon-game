@@ -27,7 +27,7 @@ export const NUMBER_OF_DUPLICATE_CARDS = 2
 
 export const MAX_ALLOWED_FLIPPED_CARDS = 2
 
-export const FLIPPING_TIME = 2
+export const FLIPPING_TIME_IN_MILI_SECOND = 800
 
 export const RATIO_OF_HEIGHT_AND_WIDTH = 4 / 3
 
