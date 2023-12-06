@@ -1,81 +1,59 @@
 <script setup lang="ts">
-import { onMounted, reactive, ref } from 'vue';
-import ModeList from './ModeGame/ModeList.vue';
+import { onMounted, ref } from 'vue';
 import { IGameMode } from '../core/interfaces/model/GameMode';
+import ModeGame from './ModeGame.vue';
 import CardList from './card/CardList.vue';
-
-defineProps<{ msg: string; }>();
+import Result from './Result.vue';
 
 const gameMode = ref<IGameMode>();
+const completionTime = ref(0)
+const startTime = ref(0)
 
-const modes: IGameMode[] = [
-  {
-    title: '4x4',
-    rank: 'Easy',
-    numberOfHorizontalItems: 4,
-    numberOfVerticalItems: 4
-  },
-  {
-    title: '6x6',
-    rank: 'Normal',
-    numberOfHorizontalItems: 6,
-    numberOfVerticalItems: 6
-  },
-  {
-    title: '8x8',
-    rank: 'Hard',
-    numberOfHorizontalItems: 8,
-    numberOfVerticalItems: 8
-  },
-  {
-    title: '10x10x',
-    rank: 'Super Hard',
-    numberOfHorizontalItems: 10,
-    numberOfVerticalItems: 10
-  }
-];
-
-function onSelectModehandler(mode: IGameMode) {
+function selectGameModehandler(mode: IGameMode) {
   gameMode.value = mode;
-  console.log('onSelectModehandler');
+  startTime.value = Date.now()
 }
-const listCart = ref<IGameMode[]>([]);
+
+function resetGameHandler() {
+  startTime.value = Date.now();
+  completionTime.value = 0
+}
+
+function endGameHandler() {
+  startTime.value = 0;
+  const miliSecondToSecond = 1000;
+  completionTime.value = Math.round((Date.now() - startTime.value) / miliSecondToSecond);
+}
+
 onMounted(() => {
-  listCart.value = [];
 });
 </script>
 
 <template>
-  <div class="main">
-    <div
-      v-if="!gameMode?.rank"
-      class="game-menu"
-    >
-      <h1 class="game-title"> POKE MEMORIES </h1>
-      <p> Select mode to start game </p>
-      <ModeList
-        :listModes="modes"
-        @onSelectGameMode="onSelectModehandler"
-        class="mt-5"
-      />
+  <main class="main">
+    <div v-if="!startTime && !completionTime" class="game-menu">
+      <h1 class="game-title">POKE MEMORIES</h1>
+      <p>Select mode to start game</p>
+      <ModeGame @onSelectGameMode="selectGameModehandler" class="mt-5" />
     </div>
 
-    <template v-if="gameMode?.rank">
-      <CardList :gameMode="gameMode" />
+    <template v-if="startTime && !completionTime">
+      <CardList :gameMode="gameMode" @on-end-game="endGameHandler" />
     </template>
 
-  </div>
+    <Result v-if="completionTime" :completionTime="completionTime" @on-reset-game="resetGameHandler" />
+  </main>
 </template>
 
 <style scoped lang="postcss">
 .main {
-  color: #ee9d9d;
-  height: 100%;
-
-  .game-menu {
-    margin: auto;
-    padding-top: calc(50% - 500px);
-  }
+  color: var(--content-color);
+  height: auto;
+  min-height: 100%;
+  display: flex;
+  justify-content: center;
+  padding: 50px 0;
+  align-items: center;
 
   .game-title {
     font-size: 4.5rem;

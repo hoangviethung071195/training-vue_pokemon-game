@@ -1,66 +1,101 @@
 <script setup lang="ts">
-import { ICard } from '@core/interfaces/model/Card';
-import { IGameMode } from '@core/interfaces/model/GameMode';
-import { onMounted, ref } from 'vue';
-import { shuffleArray } from '../../core/utils/array';
-import CardItem from './CardItem.vue';
-import { cloneDeep } from 'lodash';
+import { ICard } from '@core/interfaces/model/Card'
+import { IGameMode } from '@core/interfaces/model/GameMode'
+import { onMounted, ref } from 'vue'
+import { GAME_MODE } from '../../core/constants/game'
+import { shuffleArray } from '../../core/utils/array'
+import CardItem from './Interact.vue'
+import { NUMBER_OF_DUPLICATE_CARDS, MAX_ALLOWED_FLIPPED_CARDS, FLIPPING_TIME, TOTAL_NUMBER_OF_CARDS, CARD_SCREEN_WIDTH_IN_PIXEL } from '../../core/constants/game'
 
-const prop = defineProps<{ gameMode: IGameMode; }>();
+const { gameMode } = withDefaults(defineProps<{ gameMode?: IGameMode }>(), { gameMode: () => GAME_MODE[0] })
 
-const displayedCard = ref<ICard[]>([]);
+const emit = defineEmits<{ onEndGame: [] }>()
 
-const flipedCard = ref<ICard[]>([]);
+const displayedCards = ref<ICard[]>([])
 
-const listCard = Array(64).fill(null).map((_, i) => ({
-  url: `/src/assets/images/${i + 1}.png`,
-}));
+const flippedCard = ref<ICard[]>([])
+
+const isNotAllowFlipping = ref(false)
+
+const widthOfEachCard = CARD_SCREEN_WIDTH_IN_PIXEL / gameMode.numberOfHorizontalItems
+
+const listCards: ICard[] =
+  Array(TOTAL_NUMBER_OF_CARDS)
+    .fill(null)
+    .map((_, i) => ({
+      url: `/src/assets/images/${i + 1}.png`,
+      index: i
+    }))
+
+const cardStyle = {
+  gridTemplateColumns: `repeat(${gameMode.numberOfHorizontalItems}, ${widthOfEachCard
+    }px)`,
+  width: `${CARD_SCREEN_WIDTH_IN_PIXEL + gameMode.numberOfHorizontalItems * 20}'px'`,
+}
 
 onMounted(() => {
-  const { numberOfHorizontalItems, numberOfVerticalItems } = prop.gameMode;
-  const totalCards = numberOfHorizontalItems * numberOfVerticalItems;
-  const shuffleCards = shuffleArray(listCard.slice(0, totalCards / 2));
-  displayedCard.value = shuffleCards.concat(cloneDeep(shuffleCards)).map((card, index) => ({
-    ...card,
-    index
-  }));
+  loadDisplayedCards()
+})
 
-});
+function loadDisplayedCards() {
+  const { numberOfHorizontalItems, numberOfVerticalItems } = gameMode
+  const totalCards = numberOfHorizontalItems * numberOfVerticalItems
+  const numberOfUniqCards = totalCards / NUMBER_OF_DUPLICATE_CARDS;
+  const uniqCards = listCards.slice(0, numberOfUniqCards)
+
+  displayedCards.value = shuffleArray(
+    [...uniqCards, ...uniqCards]
+      .map((card, index) => ({
+        ...card,
+        index,
+      }))
+  )
+}
+
+function processAfterNotAllowFlippingCards() {
+  flippedCard.value = []
+  isNotAllowFlipping.value = false
+}
 
 function flipCardHandler(card: ICard) {
-  flipedCard.value.push(card);
-  const maxFlipedCard = 2;
-  if (flipedCard.value.length === maxFlipedCard) {
-    if (card.url === flipedCard.value[0].url) {
-      flipedCard.value = [];
+  flippedCard.value.push(card)
+
+  if (flippedCard.value.length === MAX_ALLOWED_FLIPPED_CARDS) {
+    isNotAllowFlipping.value = true
+    const isCorrectCard = flippedCard.value.every(c => c.url === card.url)
+    if (isCorrectCard) {
+      processAfterNotAllowFlippingCards()
+      checkEndGame()
     } else {
       setTimeout(() => {
-        flipedCard.value.forEach(card => card.isFlipped = false);
-        flipedCard.value = [];
-      }, 800);
+        flippedCard.value.forEach(card => card.isFlipped = false)
+        processAfterNotAllowFlippingCards()
+      }, FLIPPING_TIME)
     }
+  } else {
+    isNotAllowFlipping.value = false
   }
 }
 
+function checkEndGame() {
+  if (displayedCards.value.every(c => c.isFlipped)) {
+    emit('onEndGame');
+  }
+}
 </script>
 
 <template>
-  <div
-    :style="{
-      display: 'grid',
-      justifyContent: 'center',
-      gridTemplateColumns: `repeat(${gameMode.numberOfHorizontalItems}, 170px)`,
-      rowGap: '20px',
-      justifyItems: 'center'
-    }"
-    class="my-10"
-  >
-    <CardItem
-      v-for="cart in displayedCard"
-      :card="cart"
-      @on-flip-card="flipCardHandler"
-    />
+  <div class="list-cards" :style="cardStyle">
+    <CardItem v-for="cart in displayedCards" :card="cart" :isNotAllowFlipping="isNotAllowFlipping"
+      :widthOfEachCard="widthOfEachCard" @on-flip-card="flipCardHandler" />
   </div>
 </template>
 
-<style scoped></style>
+<style scoped lang="postcss">
+.list-cards {
+  display: grid;
+  justify-content: center;
+  justify-items: center;
+  gap: 20px;
+}
+</style>

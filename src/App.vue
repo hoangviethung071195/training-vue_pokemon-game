@@ -4,12 +4,5 @@ import Main from './components/Main.vue'
 </script>
 
 <template>
-  <Main msg="Vite + Vue" />
+  <Main />
 </template>
-
-<style scoped>
-.logo {
-  
-}
-
-</style>

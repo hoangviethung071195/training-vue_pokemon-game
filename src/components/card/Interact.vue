@@ -1,11 +1,17 @@
 <script setup lang="ts">
 import { ICard } from '@core/interfaces/model/Card';
-import { ref } from 'vue';
+import { RATIO_OF_HEIGHT_AND_WIDTH } from '../../core/constants/game'
 
-const prop = defineProps<{ card: ICard; }>();
-const emit = defineEmits<{ onFlipCard: [fi: ICard]; }>();
+const prop = defineProps<{
+  card: ICard;
+  isNotAllowFlipping: boolean,
+  widthOfEachCard: number
+}>();
+
+const emit = defineEmits<{ onFlipCard: [card: ICard]; }>();
 
 function flipCardHandler() {
+  if (prop.isNotAllowFlipping) return;
   prop.card.isFlipped = true;
   emit('onFlipCard', prop.card);
 }
@@ -13,29 +19,16 @@ function flipCardHandler() {
 </script>
 
 <template>
-  <div
-    class="flip-card"
-    @click="flipCardHandler"
-  >
-    <div
-      class="flip-card-inner"
-      :class="{ 'flipped-card': card.isFlipped }"
-    >
+  <div class="flip-card" :style="{
+    width: widthOfEachCard + 'px',
+    height: widthOfEachCard * RATIO_OF_HEIGHT_AND_WIDTH + 'px'
+  }">
+    <div class="flip-card-inner" :class="{ 'flipped-card': card.isFlipped }">
       <div class="flip-card-front">
-        <img
-          :src="card.url"
-          alt="card-front"
-          width="100"
-          height="100"
-        >
+        <img class="image-card-front" :src="card.url" alt="card-front" width="80%">
       </div>
-      <div class="flip-card-back">
-        <img
-          src="/src/assets/images/icon_back.png"
-          alt="card-back"
-          width="50"
-          height="50"
-        >
+      <div class="flip-card-back" @click="flipCardHandler">
+        <img class="image-card-back" src="/src/assets/images/icon_back.png" alt="card-back" width="40%">
       </div>
     </div>
   </div>
@@ -43,9 +36,7 @@ function flipCardHandler() {
 
 <style scoped lang="postcss">
 .flip-card {
-  width: 150px;
-  height: 200px;
-  background-color: #7e405f;
+  background-color: var(--bg-color);
   border-radius: 15px;
   position: relative;
   perspective: 1000px;
@@ -67,12 +58,8 @@ function flipCardHandler() {
   transform-style: preserve-3d;
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
   border-radius: 15px;
-  box-shadow: 0 3px 18px 3px rgba(0, 0, 0, .2);
+  box-shadow: 0 3px 18px 3px rgba(0, 0, 0, 0.2);
   transform: rotateY(180deg);
-}
-
-.flipped-card {
-  transform: rotateY(0deg);
 }
 
 .flip-card-front,
@@ -86,13 +73,16 @@ function flipCardHandler() {
 }
 
 .flip-card-front {
-  background-color: #ee9d9d;
+  background-color: var(--content-color);
 }
 
 .flip-card-back {
-  background-color: #7e405f;
-  color: white;
+  background-color: var(--bg-color);
   transform: rotateY(180deg);
   cursor: pointer;
+}
+
+.flipped-card {
+  transform: rotateY(0deg);
 }
 </style>

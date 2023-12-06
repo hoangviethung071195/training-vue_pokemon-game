@@ -10,12 +10,12 @@
     "lint:script": "eslint --ext .ts,vue --ignore-path .gitignore ."
   },
   "dependencies": {
-    "@types/lodash": "^4.14.202",
     "lodash": "^4.17.21",
     "vue": "^3.3.8",
     "vue-router": "^4.2.5"
   },
   "devDependencies": {
+    "@types/lodash": "^4.14.202",
     "@typescript-eslint/eslint-plugin": "^6.13.2",
     "@typescript-eslint/parser": "^6.13.2",
     "@vitejs/plugin-vue": "^4.5.0",
