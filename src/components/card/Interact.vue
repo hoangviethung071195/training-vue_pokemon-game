@@ -32,7 +32,7 @@ function flipCardHandler() {
     >
       <div class="flip-card--front">
         <img
-          :src="card.url"
+          :src="'/images/' + card.fileName"
           alt="card-front"
           width="80%"
         />
@@ -42,7 +42,7 @@ function flipCardHandler() {
         @click="flipCardHandler"
       >
         <img
-          src="/src/assets/images/icon_back.png"
+          src="/images/icon_back.png"
           alt="card-back"
           width="40%"
         />

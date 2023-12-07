@@ -23,7 +23,7 @@ const listCards: ICard[] =
   Array(TOTAL_NUMBER_OF_CARDS)
     .fill(null)
     .map((_, i) => ({
-      url: `/src/assets/images/${i + 1}.png`
+      fileName: `${i + 1}.png`
     }));
 
 const cardStyle = {
@@ -54,7 +54,7 @@ function flipCardHandler(card: ICard) {
 
   if (flippedCard.value.length === MAX_ALLOWED_FLIPPED_CARDS) {
     isNotAllowFlipping.value = true;
-    const isCorrectCard = flippedCard.value.every(c => c.url === card.url);
+    const isCorrectCard = flippedCard.value.every(c => c.fileName === card.fileName);
     if (isCorrectCard) {
       processAfterCheckingIsCorrectCard();
       setTimeout(() => {

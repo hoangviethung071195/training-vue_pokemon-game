@@ -1,5 +1,5 @@
 export interface ICard {
-  url: string;
+  fileName: string;
   sortOrder?: number;
   isFlipped?: boolean;
 }
