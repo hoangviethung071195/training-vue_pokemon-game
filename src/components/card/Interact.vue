@@ -28,7 +28,7 @@ function flipCardHandler() {
   >
     <div
       class="flip-card__inner"
-      :class="{ 'flipped-card': card.isFlipped }"
+      :class="{ 'flip-card__inner--rotate': card.isFlipped }"
     >
       <div class="flip-card--front">
         <img
@@ -99,7 +99,7 @@ function flipCardHandler() {
   cursor: pointer;
 }
 
-.flipped-card {
+.flip-card__inner--rotate {
   transform: rotateY(0deg);
 }
 </style>

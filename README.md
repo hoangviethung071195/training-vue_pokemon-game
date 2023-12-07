@@ -16,11 +16,7 @@
       </ul>
     </li>
     <li><a href="#usage">Usage</a></li>
-    <li><a href="#roadmap">Roadmap</a></li>
-    <li><a href="#contributing">Contributing</a></li>
-    <li><a href="#license">License</a></li>
     <li><a href="#contact">Contact</a></li>
-    <li><a href="#acknowledgments">Acknowledgments</a></li>
   </ol>
 </details>
 
@@ -37,13 +33,12 @@ Source Code: [https://github.com/hoangviethung071195/training-vue_pokemon-game](
 
 ### Built With
 
-* [![Vue][Vue.js]][Vue-url]
-* [![Vite][Vite]][Vite-url]
-* [![Typescript][Typescript]][Typescript-url]
-* [![Tailwind][Tailwind]][Tailwind-url]
+* Vue
+* Vite
+* Typescript
+* Tailwind
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
-
 
 
 <!-- GETTING STARTED -->
@@ -59,8 +54,6 @@ To get a local copy up and running follow these simple example steps.
   ```
 
 ### Installation
-
-_Below is an example of how you can instruct your audience on installing and setting up your app. This template doesn't rely on any external dependencies or services._
 
 1. Clone the repo
    ```sh
@@ -92,7 +85,7 @@ _Below is an example of how you can instruct your audience on installing and set
 <!-- CONTACT -->
 ## Contact
 
-HungHV - [My Email](hoangviethung071195@gmail.com) - hoangviethung071195@gmail.com
+HungHV - [Facebook](https://www.facebook.com/hung.bom.756) - hoangviethung071195@gmail.com
 
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
@@ -129,8 +122,8 @@ HungHV - [My Email](hoangviethung071195@gmail.com) - hoangviethung071195@gmail.c
 [Bootstrap-url]: https://getbootstrap.com
 [JQuery.com]: https://img.shields.io/badge/jQuery-0769AD?style=for-the-badge&logo=jquery&logoColor=white
 [JQuery-url]: https://jquery.com
-[Vitejs]: https://vitejs.dev
-[Vitejs-url]: https://camo.githubusercontent.com/61e102d7c605ff91efedb9d7e47c1c4a07cef59d3e1da202fd74f4772122ca4e/68747470733a2f2f766974656a732e6465762f6c6f676f2e737667
+[Vite]: https://vitejs.dev
+[Vite-url]: https://camo.githubusercontent.com/61e102d7c605ff91efedb9d7e47c1c4a07cef59d3e1da202fd74f4772122ca4e/68747470733a2f2f766974656a732e6465762f6c6f676f2e737667
 [Typescript]: https://www.typescriptlang.org
 [Typescript-url]: https://upload.wikimedia.org/wikipedia/commons/thumb/4/4c/Typescript_logo_2020.svg/1024px-Typescript_logo_2020.svg.png
 [Tailwind]: https://tailwindcss.com
