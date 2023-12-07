@@ -76,6 +76,7 @@ function checkEndGame() {
     emit('onEndGame');
   }
 }
+
 </script>
 
 <template>

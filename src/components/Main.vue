@@ -23,15 +23,13 @@ function endGameHandler() {
   const miliSecondToSecond = 1000;
   completionTime.value = Math.round((Date.now() - startTime.value) / miliSecondToSecond);
 }
+
 </script>
 
 <template>
   <main class="main">
-    <div
-      v-if="!startTime && !completionTime"
-      class="game-menu"
-    >
-      <h1 class="game-title">POKE MEMORIES</h1>
+    <div v-if="!startTime && !completionTime">
+      <h1 class="main--title">POKE MEMORIES</h1>
       <p>Select mode to start game</p>
       <ModeGame
         @onSelectGameMode="selectGameModehandler"
@@ -64,7 +62,7 @@ function endGameHandler() {
   padding: 50px 0;
   align-items: center;
 
-  .game-title {
+  .main--title {
     font-size: 4.5rem;
     font-weight: 600;
   }

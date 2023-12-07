@@ -11,12 +11,12 @@ function selectMode(mode: IGameMode) {
 </script>
 
 <template>
-  <ul class="mode-game-list">
+  <ul class="mode-game">
     <li
       v-for="mode in GAME_MODE"
       :key="mode.rank"
       @click="selectMode(mode)"
-      class="mode-game-item"
+      class="mode-game__item"
     >
       <p>{{ mode.numberOfHorizontalItems + 'x' + mode.numberOfVerticalItems }}</p>
       <p class="text-xl">{{ mode.rank }}</p>
@@ -25,12 +25,12 @@ function selectMode(mode: IGameMode) {
 </template>
 
 <style scoped lang="postcss">
-.mode-game-list {
+.mode-game {
   display: flex;
   justify-content: center;
   gap: 30px;
 
-  .mode-game-item {
+  .mode-game__item {
     width: 150px;
     height: 150px;
     border: 1px solid var(--content-color);
@@ -44,4 +44,5 @@ function selectMode(mode: IGameMode) {
       color: var(--bg-color);
     }
   }
-}</style>
+}
+</style>

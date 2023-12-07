@@ -19,12 +19,7 @@ body {
   font-size: 32px;
 }
 
-h1 {
-  font-size: 3.2rem;
-  line-height: 1.1;
-}
-
-button {
+.btn-custom {
   border-radius: 8px;
   border: 1px solid var(--content-color);
   padding: 0.6rem 1.2rem;
@@ -36,7 +31,7 @@ button {
   transition: 0.3s;
 }
 
-button:hover {
+.btn-custom:hover {
   background-color: var(--content-color);
   color: var(--bg-color);
 }

@@ -27,10 +27,10 @@ function flipCardHandler() {
     }"
   >
     <div
-      class="flip-card-inner"
+      class="flip-card__inner"
       :class="{ 'flipped-card': card.isFlipped }"
     >
-      <div class="flip-card-front">
+      <div class="flip-card--front">
         <img
           :src="card.url"
           alt="card-front"
@@ -38,7 +38,7 @@ function flipCardHandler() {
         />
       </div>
       <div
-        class="flip-card-back"
+        class="flip-card--back"
         @click="flipCardHandler"
       >
         <img
@@ -66,7 +66,7 @@ function flipCardHandler() {
   }
 }
 
-.flip-card-inner {
+.flip-card__inner {
   position: relative;
   width: 100%;
   height: 100%;
@@ -79,8 +79,8 @@ function flipCardHandler() {
   transform: rotateY(180deg);
 }
 
-.flip-card-front,
-.flip-card-back {
+.flip-card--front,
+.flip-card--back {
   position: absolute;
   width: 100%;
   height: 100%;
@@ -89,11 +89,11 @@ function flipCardHandler() {
   border-radius: 15px;
 }
 
-.flip-card-front {
+.flip-card--front {
   background-color: var(--content-color);
 }
 
-.flip-card-back {
+.flip-card--back {
   background-color: var(--bg-color);
   transform: rotateY(180deg);
   cursor: pointer;

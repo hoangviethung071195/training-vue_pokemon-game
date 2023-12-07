@@ -16,24 +16,39 @@ function resetGameHandler() {
     <h4 class="text-5xl">{{ completionTime }} seconds</h4>
     <button
       @click="resetGameHandler"
-      class="my-5"
+      class="btn-custom my-5"
     >Start Again</button>
     <p class="text-base">Connect with me</p>
     <div class="flex justify-center">
       <a href="#">
-        <img src="https://img.icons8.com/color/48/000000/facebook.png" />
+        <img
+          src="https://img.icons8.com/color/48/000000/facebook.png"
+          alt="facebook icon"
+        />
       </a>
       <a href="#">
-        <img src="https://img.icons8.com/fluent/48/000000/twitter.png" />
+        <img
+          src="https://img.icons8.com/fluent/48/000000/twitter.png"
+          alt="twitter icon"
+        />
       </a>
       <a href="#">
-        <img src="https://img.icons8.com/fluent/48/000000/instagram-new.png" />
+        <img
+          src="https://img.icons8.com/fluent/48/000000/instagram-new.png"
+          alt="instagram icon"
+        />
       </a>
       <a href="#">
-        <img src="https://img.icons8.com/fluency/48/000000/gmail-new.png" />
+        <img
+          src="https://img.icons8.com/fluency/48/000000/gmail-new.png"
+          alt="gmail icon"
+        />
       </a>
       <a href="#">
-        <img src="https://img.icons8.com/color/48/000000/youtube-play.png" />
+        <img
+          src="https://img.icons8.com/color/48/000000/youtube-play.png"
+          alt="youtube icon"
+        />
       </a>
     </div>
   </section>
