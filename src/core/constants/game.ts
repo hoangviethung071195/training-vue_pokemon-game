@@ -1,4 +1,4 @@
-import { IGameMode } from '@core/interfaces/model/GameMode';
+import { IGameMode } from 'src/core/interfaces/model/GameMode';
 
 export const GAME_MODE: IGameMode[] = [
   {

@@ -11,11 +11,9 @@
     "strict": true,
     "jsx": "preserve",
     "sourceMap": true,
-    "baseUrl": "src",
+    "baseUrl": ".",
     "paths": {
-      "@component/*": ["component/*"],
-      "@assets/*": ["assets/*"],
-      "@core/*": ["core/*"],
+      "src/*": ["./src/*"],
     },
     "lib": [
       "esnext",

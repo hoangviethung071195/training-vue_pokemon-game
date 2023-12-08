@@ -3,9 +3,9 @@
 defineProps<{ completionTime: number; }>();
 const emit = defineEmits<{ onResetGame: []; }>();
 
-function resetGameHandler() {
+const resetGameHandler = () => {
   emit('onResetGame');
-}
+};
 
 </script>
 

@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import { ICard } from '@core/interfaces/model/Card';
-import { RATIO_OF_HEIGHT_AND_WIDTH } from '../../core/constants/game';
+import { ICard } from 'src/core/interfaces/model/Card';
+import { RATIO_OF_HEIGHT_AND_WIDTH } from 'src/core/constants/game';
 
 const prop = defineProps<{
   card: ICard;
@@ -10,11 +10,11 @@ const prop = defineProps<{
 
 const emit = defineEmits<{ onFlipCard: [card: ICard]; }>();
 
-function flipCardHandler() {
+const flipCardHandler = () => {
   if (prop.isNotAllowFlipping) return;
   prop.card.isFlipped = true;
   emit('onFlipCard', prop.card);
-}
+};
 
 </script>
 

@@ -1,11 +1,18 @@
 <script setup lang="ts">
-import { ICard } from '@core/interfaces/model/Card';
-import { IGameMode } from '@core/interfaces/model/GameMode';
+import { ICard } from 'src/core/interfaces/model/Card';
+import { IGameMode } from 'src/core/interfaces/model/GameMode';
 import { cloneDeep } from 'lodash';
 import { onMounted, ref } from 'vue';
-import { CARD_SCREEN_WIDTH_IN_PIXEL, FLIPPING_TIME_IN_MILI_SECOND, GAME_MODE, MAX_ALLOWED_FLIPPED_CARDS, NUMBER_OF_DUPLICATE_CARDS, TOTAL_NUMBER_OF_CARDS } from '../../core/constants/game';
-import { shuffleArray } from '../../core/utils/array';
-import CardItem from './Interact.vue';
+import {
+  CARD_SCREEN_WIDTH_IN_PIXEL,
+  FLIPPING_TIME_IN_MILI_SECOND,
+  GAME_MODE,
+  MAX_ALLOWED_FLIPPED_CARDS,
+  NUMBER_OF_DUPLICATE_CARDS,
+  TOTAL_NUMBER_OF_CARDS
+} from 'src/core/constants/game';
+import { shuffleArray } from 'src/core/utils/array';
+import CardItem from 'src/components/card/Interact.vue';
 
 const { gameMode } = withDefaults(defineProps<{ gameMode?: IGameMode; }>(), { gameMode: () => GAME_MODE[0] });
 
@@ -35,21 +42,21 @@ onMounted(() => {
   loadDisplayedCards();
 });
 
-function loadDisplayedCards() {
+const loadDisplayedCards = () => {
   const { numberOfHorizontalItems, numberOfVerticalItems } = gameMode;
   const totalCards = numberOfHorizontalItems * numberOfVerticalItems;
   const numberOfUniqCards = totalCards / NUMBER_OF_DUPLICATE_CARDS;
   const uniqCards = listCards.slice(0, numberOfUniqCards);
 
   displayedCards.value = shuffleArray(uniqCards.concat(cloneDeep(uniqCards)));
-}
+};
 
-function processAfterCheckingIsCorrectCard() {
+const processAfterCheckingIsCorrectCard = () => {
   flippedCard.value = [];
   isNotAllowFlipping.value = false;
-}
+};
 
-function flipCardHandler(card: ICard) {
+const flipCardHandler = (card: ICard) => {
   flippedCard.value.push(card);
 
   if (flippedCard.value.length === MAX_ALLOWED_FLIPPED_CARDS) {
@@ -69,13 +76,13 @@ function flipCardHandler(card: ICard) {
   } else {
     isNotAllowFlipping.value = false;
   }
-}
+};
 
-function checkEndGame() {
+const checkEndGame = () => {
   if (displayedCards.value.every(c => c.isFlipped)) {
     emit('onEndGame');
   }
-}
+};
 
 </script>
 
@@ -85,8 +92,9 @@ function checkEndGame() {
     :style="cardStyle"
   >
     <CardItem
-      v-for="cart in displayedCards"
-      :card="cart"
+      v-for="(card, i) in displayedCards"
+      :key="i"
+      :card="card"
       :isNotAllowFlipping="isNotAllowFlipping"
       :widthOfEachCard="widthOfEachCard"
       @on-flip-card="flipCardHandler"

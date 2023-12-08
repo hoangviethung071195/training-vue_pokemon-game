@@ -1,12 +1,12 @@
 <script setup lang="ts">
-import { IGameMode } from '@core/interfaces/model/GameMode';
-import { GAME_MODE } from '../core/constants/game';
+import { IGameMode } from 'src/core/interfaces/model/GameMode';
+import { GAME_MODE } from 'src/core/constants/game';
 
 const emit = defineEmits<{ onSelectGameMode: [mode: IGameMode]; }>();
 
-function selectMode(mode: IGameMode) {
+const selectMode = (mode: IGameMode) => {
   emit('onSelectGameMode', mode);
-}
+};
 
 </script>
 
